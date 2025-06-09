@@ -11,6 +11,7 @@
         return;
     }
 
+    let jsonData;
     try {
         const jsonData = JSON.parse(rawJson);
         console.log("Extracted JSON: ", jsonData)
@@ -18,7 +19,7 @@
         console.error("Failed to parse: ", error);
     }
 
-    const events = jsonContent?.data?.events;
+    const events = jsonData?.data?.events;
     if (!Array.isArray(events)) {
         console.warn("No events array found in jsonContent.data.events");
         return;
