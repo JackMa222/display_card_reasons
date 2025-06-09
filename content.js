@@ -17,4 +17,23 @@
     } catch (error) {
         console.error("Failed to parse: ", error);
     }
+
+    const events = jsonContent?.data?.events;
+    if (!Array.isArray(events)) {
+        console.warn("No events array found in jsonContent.data.events");
+        return;
+    }
+
+    for (const event of events) {
+        if (event.event === "card" && typeof event.data === "string") {
+            try {
+                const parsedData = JSON.parse(event.data);
+                if (parsedData.narrative) {
+                    console.log("Card narrative: ", parsedData.narrative);
+                }
+            } catch (e) {
+            console.error("Failed to parse nested event/data JSON", e)
+            }
+        }   
+    }
 })();
