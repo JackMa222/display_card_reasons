@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Altiusrt Card Reason Extracter",
+    "version": "0.1",
+    "description": "Extracts reasons from cards that are hidden in the HTML and displays it in the cards table",
+    "permissions": ["scripting"],
+    "host_permissions": ["<all_urls>"],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ]
+}
