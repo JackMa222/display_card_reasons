@@ -25,19 +25,6 @@
         return;
     }
 
-    for (const event of events) {
-        if (event.event === "card" && typeof event.data === "string") {
-            try {
-                const parsedData = JSON.parse(event.data);
-                if (parsedData.narrative) {
-                    console.log("Card narrative: ", parsedData.narrative);
-                }
-            } catch (e) {
-            console.error("Failed to parse nested event/data JSON", e)
-            }
-        }   
-    }
-
     events = jsonData?.data?.events?.filter(e => e.event === "card");
 
     const cardsTable = document.querySelector('#cards table');
@@ -69,7 +56,7 @@
         } catch (e) {
             console.error("Failed to parse event.data JSON", e);
         }
-        console.log(narrative)
+
         const td = document.createElement('td');
         td.textContent = narrative;
         rows[index+1].appendChild(td);
