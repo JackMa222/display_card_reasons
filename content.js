@@ -13,13 +13,13 @@
 
     let jsonData;
     try {
-        const jsonData = JSON.parse(rawJson);
+        jsonData = JSON.parse(rawJson);
         console.log("Extracted JSON: ", jsonData)
     } catch (error) {
         console.error("Failed to parse: ", error);
     }
 
-    const events = jsonData?.data?.events;
+    const events = jsonData.data.events;
     if (!Array.isArray(events)) {
         console.warn("No events array found in jsonContent.data.events");
         return;
