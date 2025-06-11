@@ -14,14 +14,14 @@
     let jsonData;
     try {
         jsonData = JSON.parse(rawJson);
-        console.log("Extracted JSON: ", jsonData)
+        // console.log("Extracted JSON: ", jsonData)
     } catch (error) {
         console.error("Failed to parse: ", error);
     }
 
     if (jsonData.data.match.status == 'Upcoming')
     {
-        console.log("Match is upcoming. No cards...")
+        // console.log("Match is upcoming. No cards...")
         return;
     }
 
