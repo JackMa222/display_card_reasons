@@ -1,6 +1,4 @@
 (function() {
-    if (!location.hash.endsWith("#cards")) return;
-    
     const matchDiv = document.querySelector('div.match');
     if (!matchDiv) {
         console.error("No div.match found on this page.");
