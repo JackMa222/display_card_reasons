@@ -18,6 +18,13 @@
     } catch (error) {
         console.error("Failed to parse: ", error);
     }
+
+    if (jsonData.data.match.status == 'Upcoming')
+    {
+        console.log("Match is upcoming. No cards...")
+        return;
+    }
+
     let events;
     events = jsonData.data.events;
     if (!Array.isArray(events)) {
@@ -29,7 +36,7 @@
 
     const cardsTable = document.querySelector('#cards table');
     if (!cardsTable) {
-        console.error("Card detials table not found...")
+        console.error("Card details table not found...")
         return;
     }
 
