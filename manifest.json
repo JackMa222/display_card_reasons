@@ -7,7 +7,7 @@
     "host_permissions": ["<all_urls>"],
     "content_scripts": [
         {
-            "matches": ["*://*.altiusrt.com/*"],
+            "matches": ["*://*.altiusrt.com/*", "https://tms.fih.ch/*"],
             "js": ["content.js"]
         }
     ]
