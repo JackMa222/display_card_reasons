@@ -14,7 +14,7 @@
     let jsonData;
     try {
         jsonData = JSON.parse(rawJson);
-        // console.log("Extracted JSON: ", jsonData)
+        console.log("Extracted JSON: ", jsonData)
     } catch (error) {
         console.error("Failed to parse: ", error);
     }
