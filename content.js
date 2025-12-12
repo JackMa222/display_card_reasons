@@ -119,6 +119,19 @@
     tableElement.setAttribute("class", "table table-condensed table-hover");
     tableClass.appendChild(tableElement);
 
+    // Add table header
+    const headerTableBody = document.createElement("tbody");
+    tableElement.appendChild(headerTableBody);
+
+    const headerTableRow = document.createElement("tr");
+    ["Minute", "Team", "Outcome", "Umpire"].forEach(text => {
+        const th = document.createElement("th");
+        th.textContent = text;
+        headerTableRow.appendChild(th);
+    })
+
+    headerTableBody.appendChild(headerTableRow);
+
     referrals = jsonData?.data?.events?.filter(e => e.event === "referral");
     console.log(referrals);
 
