@@ -124,7 +124,7 @@
     tableElement.appendChild(headerTableBody);
 
     const headerTableRow = document.createElement("tr");
-    ["Minute", "Team", "Outcome", "Umpire"].forEach(text => {
+    ["Team", "Minute", "Outcome", "Umpire"].forEach(text => {
         const th = document.createElement("th");
         th.textContent = text;
         headerTableRow.appendChild(th);
@@ -132,8 +132,29 @@
 
     headerTableBody.appendChild(headerTableRow);
 
+    // Add table content
+    bodyTableRow = document.createElement("tbody");
+    tableElement.appendChild(bodyTableRow);
+    
     referrals = jsonData?.data?.events?.filter(e => e.event === "referral");
     console.log(referrals);
+
+    referrals.forEach(referral => {
+        const tr = document.createElement("tr");
+
+        minute = referral.minute;
+        team = referral.home_away;
+        outcome = referral.outcome;
+        umpire = "";
+
+        [team, minute, outcome, umpire].forEach(text => {
+            const td = document.createElement("td");
+            td.textContent = text;
+            tr.appendChild(td);
+        })
+
+        bodyTableRow.appendChild(tr);
+    })
 
     
 })();
