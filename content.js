@@ -83,6 +83,20 @@
     newNavLink.textContent = "Referrals";
     newNavLi.appendChild(newNavLink);
 
+    // Get tab content div
+    const tabContent = document.querySelector(".tab-content");
+    const referralTabContent = document.createElement("div");
+    referralTabContent.setAttribute("class", "tab-pane fade");
+    referralTabContent.setAttribute("id", "referrals");
+    tabContent.appendChild(referralTabContent);
+
+    // Add panel styling elements
+    const primaryPanel = document.createElement("div");
+    primaryPanel.setAttribute("class", "panel panel-primary");
+    referralTabContent.appendChild(primaryPanel);
+
     referrals = jsonData?.data?.events?.filter(e => e.event === "referral");
     console.log(referrals);
+
+    
 })();
