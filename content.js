@@ -19,6 +19,8 @@
         console.error("Failed to parse: ", error);
     }
 
+    //console.log(jsonData);
+
     if (jsonData.data.match.status == 'Upcoming')
     {
         // console.log("Match is upcoming. No cards...")
