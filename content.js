@@ -95,6 +95,17 @@
     primaryPanel.setAttribute("class", "panel panel-primary");
     referralTabContent.appendChild(primaryPanel);
 
+    // Add panel heading and panel body
+    const panelHeading = document.createElement("div");
+    panelHeading.setAttribute("class", "panel-heading");
+    primaryPanel.appendChild(panelHeading);
+
+    const panelTitle = document.createElement("h3");
+    panelTitle.setAttribute("class", "panel-title");
+    panelTitle.textContent = "Video Referrals";
+    panelHeading.appendChild(panelTitle);
+    
+
     referrals = jsonData?.data?.events?.filter(e => e.event === "referral");
     console.log(referrals);
 
