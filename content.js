@@ -67,5 +67,22 @@
         const td = document.createElement('td');
         td.textContent = narrative;
         rows[index+1].appendChild(td);
-     });
+    });
+    
+    // Find nav for options
+    const dataDiv = document.querySelector(".nav.nav-tabs");
+
+    // Create new list element for nav
+    const newNavLi = document.createElement("li");
+    dataDiv.appendChild(newNavLi);
+
+    // Add link element to list element
+    const newNavLink = document.createElement("a");
+    newNavLink.setAttribute("data-toggle", "tab");
+    newNavLink.setAttribute("href", "#referrals");
+    newNavLink.textContent = "Referrals";
+    newNavLi.appendChild(newNavLink);
+
+    referrals = jsonData?.data?.events?.filter(e => e.event === "referral");
+    console.log(referrals);
 })();
