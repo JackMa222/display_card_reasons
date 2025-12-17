@@ -72,6 +72,11 @@
     });
     
     // TODO Add expanding colpsan for no cards given for hover formatting.
+    if (events.length == 0) {
+        const td = rows[1].querySelector("td")
+        td.setAttribute("colspan", "7");
+    }
+
 
     // Find nav for options
     const dataDiv = document.querySelector(".nav.nav-tabs");
