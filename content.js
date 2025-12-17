@@ -71,6 +71,8 @@
         rows[index+1].appendChild(td);
     });
     
+    // TODO Add expanding colpsan for no cards given for hover formatting.
+
     // Find nav for options
     const dataDiv = document.querySelector(".nav.nav-tabs");
 
@@ -157,6 +159,16 @@
 
         bodyTableRow.appendChild(tr);
     })
+
+    if (referrals.length == 0) {
+        const tr = document.createElement("tr");
+
+        const td = document.createElement("td");
+        td.textContent = "No decisions referred";
+        td.setAttribute("colspan", "4");
+        tr.appendChild(td);
+        bodyTableRow.appendChild(tr);
+    }
 
     
 })();
