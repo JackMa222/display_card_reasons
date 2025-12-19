@@ -71,7 +71,6 @@
         rows[index+1].appendChild(td);
     });
     
-    // TODO Add expanding colpsan for no cards given for hover formatting.
     if (events.length == 0) {
         const td = rows[1].querySelector("td")
         td.setAttribute("colspan", "7");
