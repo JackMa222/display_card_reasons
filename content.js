@@ -23,7 +23,7 @@
 
     if (jsonData.data.match.status == 'Upcoming')
     {
-        // console.log("Match is upcoming. No cards...")
+        // console.log("Match is upcoming. No events...")
         return;
     }
 
@@ -76,6 +76,20 @@
         td.setAttribute("colspan", "7");
     }
 
+    // Get key match information
+
+    // Umpires (U1, U2, RU)
+    // Team Names
+    const matchHeader = document.querySelector(".match_header");
+    const teamNameRows = matchHeader?.querySelector(".row")?.querySelectorAll(".col-md-4") ?? [];
+    const teamNames = Array.from(teamNameRows).map(col => col.querySelector("h2")?.textContent.trim()).filter(name => name);
+    if (teamNames.length >= 2) {
+        homeTeamName = teamNames[0];
+        awayTeamName = teamNames[1];
+    } else {
+        homeTeamName = "Home";
+        awayTeamName = "Away";
+    }
 
     // Find nav for options
     const dataDiv = document.querySelector(".nav.nav-tabs");
@@ -145,11 +159,10 @@
     tableElement.appendChild(bodyTableRow);
     
     referrals = jsonData?.data?.events?.filter(e => e.event === "referral");
-    console.log(referrals);
 
     referrals.forEach(referral => {
         const tr = document.createElement("tr");
-
+        console.log(referral);
         minute = referral.minute;
         team = referral.home_away;
         outcome = referral.outcome;
