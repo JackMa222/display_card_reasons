@@ -1,5 +1,30 @@
 (function() {
+    // Get JSON
+    const matchDiv = document.querySelector('div.match');
+    if (!matchDiv) {
+        console.error("No div.match found on this page.");
+        return;
+    }
+
+    const rawJson = matchDiv.getAttribute('data-pusher-realtime');
+    if (!rawJson) {
+        console.error("No data-pusher-realtime attribute found on div.match.")
+        return;
+    }
+
+    let jsonData;
+    try {
+        jsonData = JSON.parse(rawJson);
+        console.log("Extracted JSON: ", jsonData)
+    } catch (error) {
+        console.error("Failed to parse: ", error);
+    }
+
+
     // Get key match information
+    // Quarters & Period Lengths
+    periodLength = jsonData.data.period_seconds;
+    periods = jsonData.data.periods;
 
     // Umpires (U1, U2, RU)
     const officialsTable = document.querySelector('#officials table');
@@ -48,28 +73,6 @@
         homeTeamName = "Home";
         awayTeamName = "Away";
     }
-
-    const matchDiv = document.querySelector('div.match');
-    if (!matchDiv) {
-        console.error("No div.match found on this page.");
-        return;
-    }
-
-    const rawJson = matchDiv.getAttribute('data-pusher-realtime');
-    if (!rawJson) {
-        console.error("No data-pusher-realtime attribute found on div.match.")
-        return;
-    }
-
-    let jsonData;
-    try {
-        jsonData = JSON.parse(rawJson);
-        console.log("Extracted JSON: ", jsonData)
-    } catch (error) {
-        console.error("Failed to parse: ", error);
-    }
-
-    //console.log(jsonData);
 
     if (jsonData.data.match.status == 'Upcoming')
     {
