@@ -1,12 +1,17 @@
 # Data
-## Referral Data
-Data displayed for referrals
+Lists of data displayed
+## Cards
+_Cards already exists, the following data is extended onto it_
+- Narrative
+- Clock (Timestamp)
+## Referrals
 - Minute
+- Clock (Timestamp)
 - Team (or Home/Away)
-- Outcome (Upheld, Rejected, NR Change)
+- Outcome (Upheld, Rejected, NR Change, NAP)
 - Umpire (Name)
 
-## Event Data
+## Events
 - Team
 - Event Type
 - Seconds
