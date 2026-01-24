@@ -129,15 +129,21 @@
 
     const headerRow = cardsTable.querySelector('tr');
     if (headerRow) {
+        const thClock = document.createElement("th");
+        thClock.textContent = "Clock";
+        headerRow.insertBefore(thClock, headerRow.children[2]);
+
         const th = document.createElement('th');
         th.textContent = "Reason";
         headerRow.appendChild(th);
     }
 
     events.forEach((event, index) => {
-        if (index >= rows.length) return;
+        const targetRow = rows[index + 1];
+        if (!targetRow) return;
         console.log(JSON.parse(event.data))
         let narrative = "";
+        let clockStamp = getClockString(event.seconds, event.period);
         try {
             const parsed = JSON.parse(event.data);
             narrative = parsed?.narrative || "";
@@ -145,14 +151,16 @@
             console.error("Failed to parse event.data JSON", e);
         }
 
-        const td = document.createElement('td');
-        td.textContent = narrative;
-        rows[index+1].appendChild(td);
+        const cellClock = targetRow.insertCell(2);
+        cellClock.textContent = clockStamp;
+
+        const cellReason = targetRow.insertCell(-1);
+        cellReason.textContent = narrative;
     });
     
     if (events.length == 0) {
         const td = rows[1].querySelector("td")
-        td.setAttribute("colspan", "7");
+        td.setAttribute("colspan", "8");
     }
 
     // Find nav for options
