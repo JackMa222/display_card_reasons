@@ -23,8 +23,34 @@
 
     // Get key match information
     // Quarters & Period Lengths
-    periodLength = jsonData.data.period_seconds;
-    periods = jsonData.data.periods;
+    const periodLength = jsonData.data.match.period_seconds;
+    const periods = jsonData.data.match.periods;
+    
+    const getClockString = (seconds, period) => {
+        switch (periods) {
+            case "2":
+                periodPrefix = "H"
+                break;
+            case "4":
+                periodPrefix = "Q";
+                break;
+            default:
+                periodPrefix = "P";
+        }
+
+        const countedPeriodSeconds = seconds % periodLength;
+        const remainingPeriodSeconds = periodLength - countedPeriodSeconds;
+        let periodSeconds = Math.round(remainingPeriodSeconds % 60);
+        let minutes = Math.floor(remainingPeriodSeconds / 60);
+        console.log(Math.round(seconds));
+        console.log(period * periodLength);
+        if (Math.round(seconds) == (period * periodLength)) {
+            periodSeconds = 0;
+            minutes = 0;
+        }
+
+        return `${periodPrefix}${period} ${minutes.toString().padStart(2, '0')}:${periodSeconds.toString().padStart(2, '0')}`;
+    };
 
     // Umpires (U1, U2, RU)
     const officialsTable = document.querySelector('#officials table');
@@ -194,7 +220,7 @@
     tableElement.appendChild(headerTableBody);
 
     const headerTableRow = document.createElement("tr");
-    ["Team", "Minute", "Outcome", "Umpire"].forEach(text => {
+    ["Team", "Minute", "Clock", "Outcome", "Umpire"].forEach(text => {
         const th = document.createElement("th");
         th.textContent = text;
         headerTableRow.appendChild(th);
@@ -246,7 +272,9 @@
                 }
         }
 
-        [team, minute, outcome].forEach(text => {
+        clock = getClockString(referral.seconds, referral.period);
+
+        [team, minute, clock, outcome].forEach(text => {
             const td = document.createElement("td");
             td.textContent = text;
             tr.appendChild(td);
