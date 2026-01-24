@@ -42,8 +42,6 @@
         const remainingPeriodSeconds = periodLength - countedPeriodSeconds;
         let periodSeconds = Math.round(remainingPeriodSeconds % 60);
         let minutes = Math.floor(remainingPeriodSeconds / 60);
-        console.log(Math.round(seconds));
-        console.log(period * periodLength);
         if (Math.round(seconds) == (period * periodLength)) {
             periodSeconds = 0;
             minutes = 0;
@@ -141,7 +139,6 @@
     events.forEach((event, index) => {
         const targetRow = rows[index + 1];
         if (!targetRow) return;
-        console.log(JSON.parse(event.data))
         let narrative = "";
         let clockStamp = getClockString(event.seconds, event.period);
         try {
@@ -244,7 +241,6 @@
 
     referrals.forEach(referral => {
         const tr = document.createElement("tr");
-        console.log(referral);
         minute = referral.minute;
         switch (referral.home_away) {
             case "home":
