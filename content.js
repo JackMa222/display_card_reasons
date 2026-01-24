@@ -34,8 +34,8 @@
     // Final Umpire variables
     const U1 = officials.umpires[0] || null;
     const U2 = officials.umpires[1] || null;
-    const reserve = officials.reserve;
-    const videoUmpire = officials.video;
+    const RU = officials.reserve;
+    const VU = officials.video || {name: "No Video Umpire Appointed", url: "#referrals"};
 
     // Team Names
     const matchHeader = document.querySelector(".match_header");
@@ -181,8 +181,8 @@
     VUCaption.setAttribute("style", "caption-side:bottom; text-align: right;");
     VUCaption.appendChild(document.createTextNode("Video Umpire: "));
     const VUCaptionLink = document.createElement("a");
-    VUCaptionLink.href = videoUmpire.url;
-    VUCaptionLink.textContent = videoUmpire.name;
+    VUCaptionLink.href = VU.url;
+    VUCaptionLink.textContent = VU.name;
     VUCaption.appendChild(VUCaptionLink);
     tableElement.appendChild(VUCaption);
 
@@ -220,13 +220,42 @@
                 team = "Team";
         }
         outcome = referral.outcome;
-        umpire = "";
 
-        [team, minute, outcome, umpire].forEach(text => {
+        umpire_designation = JSON.parse(referral.data)?.umpire ?? "";
+
+        switch (umpire_designation) {
+            case "U1":
+                umpire = U1;
+                break;
+            case "U2":
+                umpire = U2;
+                break;
+            case "RU":
+                umpire = RU;
+                break;
+            case "VU":
+                umpire = VU;
+                break;
+            default:
+                umpire = {
+                    name: "",
+                    url: "#"
+                }
+        }
+
+        [team, minute, outcome].forEach(text => {
             const td = document.createElement("td");
             td.textContent = text;
             tr.appendChild(td);
         })
+        // Add umpire with link
+        const td = document.createElement("td");
+        const umpireLink = document.createElement("a");
+        umpireLink.href = umpire.url;
+        umpireLink.textContent = umpire.name;
+        
+        td.appendChild(umpireLink);
+        tr.appendChild(td);
 
         bodyTableRow.appendChild(tr);
     })
