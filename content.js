@@ -18,7 +18,7 @@
         if (!role || !linkElement) return;
 
         const data = {
-            name: linkElement.textContent.trim().reaplce(/\s+/g, ' '),
+            name: linkElement.textContent.trim().replace(/\s+/g, ' '),
             url: linkElement.href
         };
 
@@ -175,6 +175,16 @@
     const tableElement = document.createElement("table");
     tableElement.setAttribute("class", "table table-condensed table-hover");
     tableClass.appendChild(tableElement);
+
+    // Add Video Umpire caption
+    const VUCaption = document.createElement("caption");
+    VUCaption.setAttribute("style", "caption-side:bottom; text-align: right;");
+    VUCaption.appendChild(document.createTextNode("Video Umpire: "));
+    const VUCaptionLink = document.createElement("a");
+    VUCaptionLink.href = videoUmpire.url;
+    VUCaptionLink.textContent = videoUmpire.name;
+    VUCaption.appendChild(VUCaptionLink);
+    tableElement.appendChild(VUCaption);
 
     // Add table header
     const headerTableBody = document.createElement("tbody");
