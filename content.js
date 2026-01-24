@@ -1,4 +1,54 @@
 (function() {
+    // Get key match information
+
+    // Umpires (U1, U2, RU)
+    const officialsTable = document.querySelector('#officials table');
+    const officialsTableRows = officialsTable?.querySelectorAll("tbody tr") ?? [];
+
+    const officials = {
+        umpires: [],
+        reserve: null,
+        video: null
+    };
+
+    officialsTableRows.forEach(row => {
+        const role = row.cells[0]?.textContent.trim();
+        const linkElement = row.cells[1]?.querySelector("a");
+
+        if (!role || !linkElement) return;
+
+        const data = {
+            name: linkElement.textContent.trim().reaplce(/\s+/g, ' '),
+            url: linkElement.href
+        };
+
+        if (role === "Umpire") {
+            officials.umpires.push(data);
+        } else if (role === "Reserve Umpire") {
+            officials.reserve = data;
+        } else if (role === "Video Umpire") {
+            officials.video = data;
+        }
+    })
+
+    // Final Umpire variables
+    const U1 = officials.umpires[0] || null;
+    const U2 = officials.umpires[1] || null;
+    const reserve = officials.reserve;
+    const videoUmpire = officials.video;
+
+    // Team Names
+    const matchHeader = document.querySelector(".match_header");
+    const teamNameRows = matchHeader?.querySelector(".row")?.querySelectorAll(".col-md-4") ?? [];
+    const teamNames = Array.from(teamNameRows).map(col => col.querySelector("h2")?.textContent.trim()).filter(name => name);
+    if (teamNames.length >= 2) {
+        homeTeamName = teamNames[0];
+        awayTeamName = teamNames[1];
+    } else {
+        homeTeamName = "Home";
+        awayTeamName = "Away";
+    }
+
     const matchDiv = document.querySelector('div.match');
     if (!matchDiv) {
         console.error("No div.match found on this page.");
@@ -76,21 +126,6 @@
         td.setAttribute("colspan", "7");
     }
 
-    // Get key match information
-
-    // Umpires (U1, U2, RU)
-    // Team Names
-    const matchHeader = document.querySelector(".match_header");
-    const teamNameRows = matchHeader?.querySelector(".row")?.querySelectorAll(".col-md-4") ?? [];
-    const teamNames = Array.from(teamNameRows).map(col => col.querySelector("h2")?.textContent.trim()).filter(name => name);
-    if (teamNames.length >= 2) {
-        homeTeamName = teamNames[0];
-        awayTeamName = teamNames[1];
-    } else {
-        homeTeamName = "Home";
-        awayTeamName = "Away";
-    }
-
     // Find nav for options
     const dataDiv = document.querySelector(".nav.nav-tabs");
 
@@ -164,7 +199,16 @@
         const tr = document.createElement("tr");
         console.log(referral);
         minute = referral.minute;
-        team = referral.home_away;
+        switch (referral.home_away) {
+            case "home":
+                team = homeTeamName;
+                break;
+            case "away":
+                team = awayTeamName;
+                break;
+            default:
+                team = "Team";
+        }
         outcome = referral.outcome;
         umpire = "";
 
