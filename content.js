@@ -111,7 +111,7 @@
         return;
     }
 
-    events = jsonData?.data?.events?.filter(e => e.event === "card");
+    cardEvents = jsonData?.data?.events?.filter(e => e.event === "card");
 
     const cardsTable = document.querySelector('#cards table');
     if (!cardsTable) {
@@ -136,7 +136,7 @@
         headerRow.appendChild(th);
     }
 
-    events.forEach((event, index) => {
+    cardEvents.forEach((event, index) => {
         const targetRow = rows[index + 1];
         if (!targetRow) return;
         let narrative = "";
@@ -155,7 +155,7 @@
         cellReason.textContent = narrative;
     });
     
-    if (events.length == 0) {
+    if (cardEvents.length == 0) {
         const td = rows[1].querySelector("td")
         td.setAttribute("colspan", "8");
     }
@@ -164,15 +164,15 @@
     const dataDiv = document.querySelector(".nav.nav-tabs");
 
     // Create new list element for nav
-    const newNavLi = document.createElement("li");
-    dataDiv.appendChild(newNavLi);
+    const newReferralNavLi = document.createElement("li");
+    dataDiv.appendChild(newReferralNavLi);
 
     // Add link element to list element
-    const newNavLink = document.createElement("a");
-    newNavLink.setAttribute("data-toggle", "tab");
-    newNavLink.setAttribute("href", "#referrals");
-    newNavLink.textContent = "Referrals";
-    newNavLi.appendChild(newNavLink);
+    const newReferralNavLink = document.createElement("a");
+    newReferralNavLink.setAttribute("data-toggle", "tab");
+    newReferralNavLink.setAttribute("href", "#referrals");
+    newReferralNavLink.textContent = "Referrals";
+    newReferralNavLi.appendChild(newReferralNavLink);
 
     // Get tab content div
     const tabContent = document.querySelector(".tab-content");
@@ -182,33 +182,33 @@
     tabContent.appendChild(referralTabContent);
 
     // Add panel styling elements
-    const primaryPanel = document.createElement("div");
-    primaryPanel.setAttribute("class", "panel panel-primary");
-    referralTabContent.appendChild(primaryPanel);
+    const primaryReferralPanel = document.createElement("div");
+    primaryReferralPanel.setAttribute("class", "panel panel-primary");
+    referralTabContent.appendChild(primaryReferralPanel);
 
     // Add panel heading
-    const panelHeading = document.createElement("div");
-    panelHeading.setAttribute("class", "panel-heading");
-    primaryPanel.appendChild(panelHeading);
+    const panelReferralHeading = document.createElement("div");
+    panelReferralHeading.setAttribute("class", "panel-heading");
+    primaryReferralPanel.appendChild(panelReferralHeading);
 
-    const panelTitle = document.createElement("h3");
-    panelTitle.setAttribute("class", "panel-title");
-    panelTitle.textContent = "Video Referrals";
-    panelHeading.appendChild(panelTitle);
+    const referralPanelTitle = document.createElement("h3");
+    referralPanelTitle.setAttribute("class", "panel-title");
+    referralPanelTitle.textContent = "Video Referrals";
+    panelReferralHeading.appendChild(referralPanelTitle);
 
     // Add panel body
-    const panelBody = document.createElement("div");
-    panelBody.setAttribute("class", "panel-body");
-    primaryPanel.appendChild(panelBody);
+    const panelReferralBody = document.createElement("div");
+    panelReferralBody.setAttribute("class", "panel-body");
+    primaryReferralPanel.appendChild(panelReferralBody);
 
     // Add table class and table element to panel body
-    const tableClass = document.createElement("div");
-    tableClass.setAttribute("class", "table-responsive");
-    panelBody.appendChild(tableClass);
+    const referralTableClass = document.createElement("div");
+    referralTableClass.setAttribute("class", "table-responsive");
+    panelReferralBody.appendChild(referralTableClass);
 
-    const tableElement = document.createElement("table");
-    tableElement.setAttribute("class", "table table-condensed table-hover");
-    tableClass.appendChild(tableElement);
+    const referralTableElement = document.createElement("table");
+    referralTableElement.setAttribute("class", "table table-condensed table-hover");
+    referralTableClass.appendChild(referralTableElement);
 
     // Add Video Umpire caption
     const VUCaption = document.createElement("caption");
@@ -218,24 +218,24 @@
     VUCaptionLink.href = VU.url;
     VUCaptionLink.textContent = VU.name;
     VUCaption.appendChild(VUCaptionLink);
-    tableElement.appendChild(VUCaption);
+    referralTableElement.appendChild(VUCaption);
 
     // Add table header
-    const headerTableBody = document.createElement("tbody");
-    tableElement.appendChild(headerTableBody);
+    const referralHeaderTableBody = document.createElement("tbody");
+    referralTableElement.appendChild(referralHeaderTableBody);
 
-    const headerTableRow = document.createElement("tr");
+    const referralHeaderTableRow = document.createElement("tr");
     ["Team", "Minute", "Clock", "Outcome", "Umpire"].forEach(text => {
         const th = document.createElement("th");
         th.textContent = text;
-        headerTableRow.appendChild(th);
+        referralHeaderTableRow.appendChild(th);
     })
 
-    headerTableBody.appendChild(headerTableRow);
+    referralHeaderTableBody.appendChild(referralHeaderTableRow);
 
     // Add table content
-    bodyTableRow = document.createElement("tbody");
-    tableElement.appendChild(bodyTableRow);
+    referralBodyTableRow = document.createElement("tbody");
+    referralTableElement.appendChild(referralBodyTableRow);
     
     referrals = jsonData?.data?.events?.filter(e => e.event === "referral");
 
@@ -292,7 +292,7 @@
         td.appendChild(umpireLink);
         tr.appendChild(td);
 
-        bodyTableRow.appendChild(tr);
+        referralBodyTableRow.appendChild(tr);
     })
 
     if (referrals.length == 0) {
@@ -302,8 +302,111 @@
         td.textContent = "No decisions referred";
         td.setAttribute("colspan", "4");
         tr.appendChild(td);
-        bodyTableRow.appendChild(tr);
+        referralBodyTableRow.appendChild(tr);
     }
+
+
+    // Display events in its own panel
+        // Create new list element for nav
+    const newEventsNavLi = document.createElement("li");
+    dataDiv.appendChild(newEventsNavLi);
+
+    // Add link element to list element
+    const newEventsNavLink = document.createElement("a");
+    newEventsNavLink.setAttribute("data-toggle", "tab");
+    newEventsNavLink.setAttribute("href", "#events");
+    newEventsNavLink.textContent = "Events";
+    newEventsNavLi.appendChild(newEventsNavLink);
+
+    // Get tab content div
+    const EventsTabContent = document.createElement("div");
+    EventsTabContent.setAttribute("class", "tab-pane fade");
+    EventsTabContent.setAttribute("id", "events");
+    tabContent.appendChild(EventsTabContent);
+
+    // Add panel styling elements
+    const primaryEventsPanel = document.createElement("div");
+    primaryEventsPanel.setAttribute("class", "panel panel-primary");
+    EventsTabContent.appendChild(primaryEventsPanel);
+
+    // Add panel heading
+    const panelEventsHeading = document.createElement("div");
+    panelEventsHeading.setAttribute("class", "panel-heading");
+    primaryEventsPanel.appendChild(panelEventsHeading);
+
+    const eventsPanelTitle = document.createElement("h3");
+    eventsPanelTitle.setAttribute("class", "panel-title");
+    eventsPanelTitle.textContent = "Events";
+    panelEventsHeading.appendChild(eventsPanelTitle);
+
+    // Add panel body
+    const panelEventsBody = document.createElement("div");
+    panelEventsBody.setAttribute("class", "panel-body");
+    primaryEventsPanel.appendChild(panelEventsBody);
+
+    // Add table class and table element to panel body
+    const EventsTableClass = document.createElement("div");
+    EventsTableClass.setAttribute("class", "table-responsive");
+    panelEventsBody.appendChild(EventsTableClass);
+
+    const EventsTableElement = document.createElement("table");
+    EventsTableElement.setAttribute("class", "table table-condensed table-hover");
+    EventsTableClass.appendChild(EventsTableElement);
+
+        // Add table header
+    const EventsHeaderTableBody = document.createElement("tbody");
+    EventsTableElement.appendChild(EventsHeaderTableBody);
+
+    const eventsHeaderTableRow = document.createElement("tr");
+    ["Event Type", "Team", "Minute", "Clock"].forEach(text => {
+        const th = document.createElement("th");
+        th.textContent = text;
+        eventsHeaderTableRow.appendChild(th);
+    })
+
+    EventsHeaderTableBody.appendChild(eventsHeaderTableRow);
+
+    // Add table content
+    EventsBodyTableRow = document.createElement("tbody");
+    EventsTableElement.appendChild(EventsBodyTableRow);
+    
+    events.forEach(event => {
+        const tr = document.createElement("tr");
+        switch (event.home_away) {
+            case "home":
+                team = homeTeamName;
+                break;
+            case "away":
+                team = awayTeamName;
+                break;
+            default:
+                team = "Team";
+        }
+
+
+        eventType = event.event.toUpperCase();
+        minute = event.minute;
+        clock = getClockString(event.seconds, event.period);
+
+        [eventType, team, minute, clock].forEach(text => {
+            const td = document.createElement("td");
+            td.textContent = text;
+            tr.appendChild(td);
+        })
+
+        EventsBodyTableRow.appendChild(tr);
+    })
+
+    if (events.length == 0) {
+        const tr = document.createElement("tr");
+
+        const td = document.createElement("td");
+        td.textContent = "No events";
+        td.setAttribute("colspan", "4");
+        tr.appendChild(td);
+        EventsBodyTableRow.appendChild(tr);
+    }
+    
 
     
 })();
